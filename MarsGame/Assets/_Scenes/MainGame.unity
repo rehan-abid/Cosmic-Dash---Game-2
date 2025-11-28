@@ -1217,7 +1217,7 @@ MonoBehaviour:
   minSpawnTime: 2
   maxSpawnTime: 3.5
   minEnemySpeed: 3
-  maxEnemySpeed: 12
+  maxEnemySpeed: 14
 --- !u!4 &2121145299
 Transform:
   m_ObjectHideFlags: 0
