@@ -5,6 +5,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static int score = 0;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI hudScoreText;
     void Awake()
     {
         score = 0;
@@ -16,6 +17,14 @@ public class ScoreManager : MonoBehaviour
         {
             scoreText.text = "Score:" + score.ToString();
         }
+        UpdateScoreDisplay();
         Debug.Log("Current Score: " + score);
+    }
+    public void UpdateScoreDisplay()
+    {
+        if (hudScoreText != null)
+        {
+            hudScoreText.text =score.ToString();
+        }
     }
 }

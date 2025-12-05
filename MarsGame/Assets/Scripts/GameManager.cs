@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreenUI;
     public PlayerController playerController;
     public TextMeshProUGUI finalScoreText;
+    public GameObject hudCanvas;
     void Start()
     {
+        hudCanvas.SetActive(false);
         if (startScreenUI != null)
         {
             startScreenUI.SetActive(true);
@@ -21,17 +23,22 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
+
         startScreenUI.SetActive(false);
+        hudCanvas.SetActive(true);
 
         Time.timeScale = 1f;
 
         ScoreManager.score = 0;
+        FindAnyObjectByType<ScoreManager>().UpdateScoreDisplay();
 
     }
     public void GameOver()
     {
         // 1. Freeze the game
         Time.timeScale = 0f;
+
+        hudCanvas.SetActive(false);
 
         // 2. Show the Game Over screen
         gameOverScreenUI.SetActive(true);
