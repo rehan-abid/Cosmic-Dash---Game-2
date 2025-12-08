@@ -58,6 +58,10 @@ public class EnemyController : MonoBehaviour
                 playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 6f);
             }
             Destroy(gameObject);
+            if(gameManager != null)
+            {
+                gameManager.PlaySFX(gameManager.stompSFX);
+            }
         }
     }
 }

@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
     public PlayerController playerController;
     public TextMeshProUGUI finalScoreText;
     public GameObject hudCanvas;
+    public AudioSource backgroundMusicSource;
+    public AudioSource sfxSource;
+    public AudioClip gameOverSFX;
+    public AudioClip jumpSFX;
+    public AudioClip stompSFX;
     void Start()
     {
         hudCanvas.SetActive(false);
@@ -35,6 +40,12 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
+        if (backgroundMusicSource != null)
+        {
+            backgroundMusicSource.Stop();
+        }
+        PlaySFX(gameOverSFX);
+
         // 1. Freeze the game
         Time.timeScale = 0f;
 
@@ -58,5 +69,12 @@ public class GameManager : MonoBehaviour
 
         // 2. Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void PlaySFX(AudioClip clip)
+    {
+        if(sfxSource != null && clip != null)
+        {
+            sfxSource.PlayOneShot(clip);
+        }
     }
 }

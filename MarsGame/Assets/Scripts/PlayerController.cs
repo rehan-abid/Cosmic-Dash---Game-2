@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private PlayerControls playerControls;
     private Vector2 currentMoveInput;
+    private GameManager gameManager;
 
     void Awake()
     {
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
         playerControls.Gameplay.Move.performed += ctx => currentMoveInput = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.canceled += ctx => currentMoveInput = Vector2.zero;
         playerControls.Gameplay.Jump.performed += OnJump;
+        gameManager = FindAnyObjectByType<GameManager>();
     }
     void OnEnable()
     {
@@ -36,11 +38,15 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
-    void OnJump(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext context)
     {
         if (isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            if (gameManager != null)
+            {
+              gameManager.PlaySFX(gameManager.jumpSFX);
+            }
         }
     }
     void FixedUpdate()
