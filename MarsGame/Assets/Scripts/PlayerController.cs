@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private PlayerControls playerControls;
     private Vector2 currentMoveInput;
     private GameManager gameManager;
+    private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
@@ -33,10 +34,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        HandleSpriteFlipping();
     }
     public void OnJump(InputAction.CallbackContext context)
     {
@@ -45,7 +48,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             if (gameManager != null)
             {
-              gameManager.PlaySFX(gameManager.jumpSFX);
+                gameManager.PlaySFX(gameManager.jumpSFX);
             }
         }
     }
@@ -57,4 +60,25 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(moveInputX * moveSpeed, rb.linearVelocity.y);
     }
 
+    private void HandleSpriteFlipping()
+    {
+        float inputX = currentMoveInput.x;
+        if (inputX < -0.01f)
+        {
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.flipX = true;
+
+            }
+
+        }
+        else
+        {
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.flipX = false;
+            }
+        }
+
+    }
 }
