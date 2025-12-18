@@ -5,6 +5,7 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private ScoreManager scoreManager;
     private GameManager gameManager;
+    public GameObject stompImagePrefab;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,6 +43,7 @@ public class EnemyController : MonoBehaviour
                 // Fallback in case the manager isn't found
                 Time.timeScale = 0f;
             }
+           
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -58,10 +60,16 @@ public class EnemyController : MonoBehaviour
                 playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 6f);
             }
             Destroy(gameObject);
-            if(gameManager != null)
+            if (gameManager != null)
             {
                 gameManager.PlaySFX(gameManager.stompSFX);
             }
+            if (stompImagePrefab != null)
+            {
+                Instantiate(stompImagePrefab, transform.position, Quaternion.identity);
+            }
+            Destroy(gameObject);
+
         }
     }
 }

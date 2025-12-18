@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentMoveInput;
     private GameManager gameManager;
     private SpriteRenderer spriteRenderer;
+    public GameObject jumpDustFX;
 
     void Awake()
     {
@@ -46,6 +47,11 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            if(jumpDustFX != null)
+            {
+                Instantiate(jumpDustFX, groundCheck.position, Quaternion.identity);
+            }
+
             if (gameManager != null)
             {
                 gameManager.PlaySFX(gameManager.jumpSFX);

@@ -19,6 +19,7 @@ TagManager:
   - 
   - 
   - 
+  - VFX
   - 
   - 
   - 
@@ -36,11 +37,13 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - VFX2
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: VFX
+    uniqueID: 748908805
     locked: 0
   m_RenderingLayers:
   - Default

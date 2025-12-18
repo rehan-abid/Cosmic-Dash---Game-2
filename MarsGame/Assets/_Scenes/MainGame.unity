@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 000000000571a32c
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1353,6 +1353,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundCheckRadius: 0.2
+  jumpDustFX: {fileID: 3380753328448046700, guid: 5a307bb1c6f379745935a32fbd4b77be, type: 3}
 --- !u!50 &845396220
 Rigidbody2D:
   serializedVersion: 5
@@ -2330,7 +2331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1727195167
 MonoBehaviour:
   m_ObjectHideFlags: 0

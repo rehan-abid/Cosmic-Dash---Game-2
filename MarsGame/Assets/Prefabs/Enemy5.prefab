@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea230bb86c11ebf4ea727d71bc1a1d2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  moveSpeed: 3
+  stompImagePrefab: {fileID: 5123213663002950394, guid: 1665bb644578c09448873d4eb213b28e, type: 3}
 --- !u!68 &7095336807364299508
 EdgeCollider2D:
   m_ObjectHideFlags: 0
