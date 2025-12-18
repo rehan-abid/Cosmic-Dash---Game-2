@@ -18,6 +18,11 @@ public class ScoreManager : MonoBehaviour
             scoreText.text = "Score:" + score.ToString();
         }
         UpdateScoreDisplay();
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.CheckForAchievements();
+        }
         Debug.Log("Current Score: " + score);
     }
     public void UpdateScoreDisplay()

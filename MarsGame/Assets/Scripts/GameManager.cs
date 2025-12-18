@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,23 @@ public class GameManager : MonoBehaviour
     public AudioClip gameOverSFX;
     public AudioClip jumpSFX;
     public AudioClip stompSFX;
+
+    [Header("Achievement Settings")]
+    public GameObject achievement10;
+    public GameObject achievement25;
+    public GameObject achievement50;
+    public GameObject achievement100;
+
+    [Header("Achievement Audio")]
+    public AudioClip audio10;
+    public AudioClip audio25;
+    public AudioClip audio50;
+    public AudioClip audio100;
+
+    private bool unlocked10 = false;
+    private bool unlocked25 = false;
+    private bool unlocked50 = false;
+    private bool unlocked100 = false;
     void Start()
     {
         hudCanvas.SetActive(false);
@@ -25,6 +43,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         gameOverScreenUI.SetActive(false);
 
+        if (achievement10) achievement10.SetActive(false);
+        if (achievement50) achievement50.SetActive(false);
+        if (achievement100) achievement100.SetActive(false);
+        if (achievement25) achievement25.SetActive(false);
     }
     public void StartGame()
     {
@@ -72,9 +94,46 @@ public class GameManager : MonoBehaviour
     }
     public void PlaySFX(AudioClip clip)
     {
-        if(sfxSource != null && clip != null)
+        if (sfxSource != null && clip != null)
         {
             sfxSource.PlayOneShot(clip);
+        }
+    }
+    public void CheckForAchievements()
+    {
+        int currentScore = ScoreManager.score;
+        if (currentScore >= 10 && !unlocked10)
+        {
+            unlocked10 = true;
+            PlaySFX(audio10);
+            StartCoroutine(ShowAchievementBriefly(achievement10));
+        }
+        if (currentScore >= 50 && !unlocked50)
+        {
+            unlocked50 = true;
+            PlaySFX(audio50);
+            StartCoroutine(ShowAchievementBriefly(achievement50));
+        }
+        if (currentScore >= 100 && !unlocked100)
+        {
+            unlocked100 = true;
+            PlaySFX(audio100);
+            StartCoroutine(ShowAchievementBriefly(achievement100));
+        }
+        if (currentScore >= 25 && !unlocked25)
+        {
+            unlocked25 = true;
+            PlaySFX(audio25);
+            StartCoroutine(ShowAchievementBriefly(achievement25));
+        }
+    }
+    private IEnumerator ShowAchievementBriefly(GameObject achievement)
+    {
+     if (achievement != null)
+     {
+         achievement.SetActive(true);
+         yield return new WaitForSecondsRealtime(2f);
+         achievement.SetActive(false);
         }
     }
 }
