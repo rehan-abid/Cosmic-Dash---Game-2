@@ -102,25 +102,25 @@ public class GameManager : MonoBehaviour
     public void CheckForAchievements()
     {
         int currentScore = ScoreManager.score;
-        if (currentScore >= 10 && !unlocked10)
+        if (currentScore >= 1 && !unlocked10)
         {
             unlocked10 = true;
             PlaySFX(audio10);
             StartCoroutine(ShowAchievementBriefly(achievement10));
         }
-        if (currentScore >= 50 && !unlocked50)
+        if (currentScore >= 25 && !unlocked50)
         {
             unlocked50 = true;
             PlaySFX(audio50);
             StartCoroutine(ShowAchievementBriefly(achievement50));
         }
-        if (currentScore >= 100 && !unlocked100)
+        if (currentScore >= 50 && !unlocked100)
         {
             unlocked100 = true;
             PlaySFX(audio100);
             StartCoroutine(ShowAchievementBriefly(achievement100));
         }
-        if (currentScore >= 25 && !unlocked25)
+        if (currentScore >= 10 && !unlocked25)
         {
             unlocked25 = true;
             PlaySFX(audio25);
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
      if (achievement != null)
      {
          achievement.SetActive(true);
-         yield return new WaitForSecondsRealtime(2f);
+         yield return new WaitForSecondsRealtime(5f);
          achievement.SetActive(false);
         }
     }

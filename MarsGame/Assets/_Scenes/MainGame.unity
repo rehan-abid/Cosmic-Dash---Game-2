@@ -617,7 +617,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: f2450863afa43b84584630564460ce7f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1486,6 +1486,10 @@ MonoBehaviour:
   achievement25: {fileID: 1845892656}
   achievement50: {fileID: 1153990401}
   achievement100: {fileID: 1313317554}
+  audio10: {fileID: 8300000, guid: 69a5ff042649fdd46ace99f1fbc9be66, type: 3}
+  audio25: {fileID: 8300000, guid: 1a6a98fc693245044a43c5924fe30d53, type: 3}
+  audio50: {fileID: 8300000, guid: 1a6a98fc693245044a43c5924fe30d53, type: 3}
+  audio100: {fileID: 8300000, guid: 02ae2ab4cffa57a428dd7136217a6f39, type: 3}
 --- !u!82 &991977788
 AudioSource:
   m_ObjectHideFlags: 0
