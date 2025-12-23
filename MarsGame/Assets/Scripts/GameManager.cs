@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreenUI;
     public PlayerController playerController;
     public TextMeshProUGUI finalScoreText;
+
+    // NEW: Text reference for the Start Screen High Score
+    public TextMeshProUGUI startHighScoreText;
+
     public GameObject hudCanvas;
     public AudioSource backgroundMusicSource;
     public AudioSource sfxSource;
@@ -33,6 +37,7 @@ public class GameManager : MonoBehaviour
     private bool unlocked25 = false;
     private bool unlocked50 = false;
     private bool unlocked100 = false;
+
     void Start()
     {
         hudCanvas.SetActive(false);
@@ -40,6 +45,10 @@ public class GameManager : MonoBehaviour
         {
             startScreenUI.SetActive(true);
         }
+
+        // NEW: Update the High Score text before the game starts
+        UpdateStartHighScoreUI();
+
         Time.timeScale = 0f;
         gameOverScreenUI.SetActive(false);
 
@@ -48,9 +57,19 @@ public class GameManager : MonoBehaviour
         if (achievement100) achievement100.SetActive(false);
         if (achievement25) achievement25.SetActive(false);
     }
+
+    // NEW: Function to load and display the High Score
+    public void UpdateStartHighScoreUI()
+    {
+        if (startHighScoreText != null)
+        {
+            int highScore = PlayerPrefs.GetInt("HighScore", 0);
+            startHighScoreText.text = "High Score: " + highScore.ToString();
+        }
+    }
+
     public void StartGame()
     {
-
         startScreenUI.SetActive(false);
         hudCanvas.SetActive(true);
 
@@ -58,8 +77,8 @@ public class GameManager : MonoBehaviour
 
         ScoreManager.score = 0;
         FindAnyObjectByType<ScoreManager>().UpdateScoreDisplay();
-
     }
+
     public void GameOver()
     {
         if (backgroundMusicSource != null)
@@ -68,30 +87,32 @@ public class GameManager : MonoBehaviour
         }
         PlaySFX(gameOverSFX);
 
-        // 1. Freeze the game
-        Time.timeScale = 0f;
+        // NEW: High Score Logic
+        int currentScore = ScoreManager.score;
+        int savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
 
-        hudCanvas.SetActive(false);
-
-        // 2. Show the Game Over screen
-        gameOverScreenUI.SetActive(true);
-
-        // 3. Display the final score
-        if (finalScoreText != null)
+        if (currentScore > savedHighScore)
         {
-            finalScoreText.text = ScoreManager.score.ToString();
+            PlayerPrefs.SetInt("HighScore", currentScore);
+            PlayerPrefs.Save();
         }
 
-        // You may want to destroy all enemies and clean up the scene here
+        Time.timeScale = 0f;
+        hudCanvas.SetActive(false);
+        gameOverScreenUI.SetActive(true);
+
+        if (finalScoreText != null)
+        {
+            finalScoreText.text = currentScore.ToString();
+        }
     }
+
     public void RestartGame()
     {
-        // 1. Unfreeze time (must be 1.0 before loading the scene)
         Time.timeScale = 1f;
-
-        // 2. Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
     public void PlaySFX(AudioClip clip)
     {
         if (sfxSource != null && clip != null)
@@ -99,6 +120,7 @@ public class GameManager : MonoBehaviour
             sfxSource.PlayOneShot(clip);
         }
     }
+
     public void CheckForAchievements()
     {
         int currentScore = ScoreManager.score;
@@ -127,13 +149,14 @@ public class GameManager : MonoBehaviour
             StartCoroutine(ShowAchievementBriefly(achievement25));
         }
     }
+
     private IEnumerator ShowAchievementBriefly(GameObject achievement)
     {
-     if (achievement != null)
-     {
-         achievement.SetActive(true);
-         yield return new WaitForSecondsRealtime(5f);
-         achievement.SetActive(false);
+        if (achievement != null)
+        {
+            achievement.SetActive(true);
+            yield return new WaitForSecondsRealtime(5f);
+            achievement.SetActive(false);
         }
     }
 }
